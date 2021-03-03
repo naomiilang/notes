@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { notes } = require('./data/notes.json');
+const { notes } = require('./data/notes');
 const express = require('express');
 const PORT = process.env.PORT || 3001;
 const app = express (); 
@@ -11,14 +11,14 @@ app.use(express.json());
 app.use(express.static('public'));
 
 function filter(query, notesArray) {
-    let results = notesArray;
+    let filteredResults = notesArray;
     if(query.title) {
-        results = results.filter(notes => notes.title === query.title);
+        results = filteredResults.filter(notes => notes.title === query.title);
     }
     if(query.title) {
-        results = results.filter(notes => notes.text === query.text);
+        results = filteredResults.filter(notes => notes.text === query.text);
     }
-    return results;
+    return filteredResults;
 }
 
 function searchById(id, notesArray) {
@@ -47,10 +47,38 @@ function validateNote(note) {
     return true;
 }
 
-app.get('./api/notes', (req, res) => {
+app.get('/api/notes', (req, res) => {
     let results = notes;
     if(req.query) {
         results = filter(req.query, results); 
     }
     res.json(results);
+});
+
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/notes.html'))
+})
+
+app.get('/api/notes:id', (req, res) => {
+    const result = searchById(req.params.id, notes);
+    res.json(result);
+});
+
+app.post('/api/notes', (req, res) => {
+    req.body.id = notes.length.toString();
+
+    if (!validateNote(req.body)) {
+        res.status(400).send('The note is not formatted correctly');
+    } else {
+        const note = createNote (req.body, notes);
+        res.json(note);
+    }
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+})
+
+app.listen(PORT, () => {
+    console.log('Server running on port ${PORT!');
 });
