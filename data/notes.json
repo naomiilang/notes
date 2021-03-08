@@ -1,14 +1,14 @@
 {
-    "notes": [
-        {
-            "id": "1",
-            "title": "make a to do list",
-            "text": "do your laundry and buy groceries"
-        },
-        {
-            "id": "2",
-            "title": "Doctor Appt",
-            "text": "appt with Dr. K at 9:30am, Saint Hospital"
-        }
-    ]
+  "notes": [
+    {
+      "id": "1",
+      "title": "make a to do list",
+      "text": "do your laundry and buy groceries"
+    },
+    {
+      "id": "2",
+      "title": "Doctor Appt",
+      "text": "appt with Dr. K at 9:30am, Saint Hospital"
+    }
+  ]
 }

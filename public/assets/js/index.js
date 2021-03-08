@@ -1,4 +1,3 @@
-alert("hello");
 let noteTitle;
 let noteText;
 let saveNoteBtn;

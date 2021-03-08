@@ -59,13 +59,13 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, './public/notes.html'))
 })
 
-app.get('/api/notes:id', (req, res) => {
-    const result = searchById(req.params.id, notes);
-    res.json(result);
-});
+// app.get('/api/notes/:id', (req, res) => {
+//     const result = searchById(req.params.id, notes);
+//     res.json(result);
+// });
 
 app.post('/api/notes', (req, res) => {
-    req.body.id = notes.length.toString();
+    req.body.id = (notes.length + 1).toString();
 
     if (!validateNote(req.body)) {
         res.status(400).send('The note is not formatted correctly');
@@ -80,5 +80,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(PORT, () => {
-    console.log('Server running on port ${PORT!');
+    console.log(`Server running on port ${PORT}!`);
 });
